@@ -20,4 +20,7 @@ def aan():
 	GPIO.output(led, True)
 	return static_file('smiley.png', root = 'images', mimetype='image/png')
 
-run(host='0.0.0.0', port=8080, debug=True, reloader=True)
+try:
+ run(host='0.0.0.0', port=8080, debug=True, reloader=True)
+finally:
+    GPIO.cleanup()
