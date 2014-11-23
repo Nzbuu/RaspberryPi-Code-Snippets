@@ -18,18 +18,6 @@ GPIO.setup(led, GPIO.OUT)
 def server_static(filename):
     return static_file(filename, root='webpageFiles')
 
-@route('/test')
-def aan():
-    return "test"    
-
-@route('/Off')
-def uit():
-	GPIO.output(led, False)
-
-@route('/On')
-def aan():
-	GPIO.output(led, True)
-
 @route('/SetStatus', method='POST')
 def setStatus():
     print "POST Header : \n %s" % dict(request.json) #for debug header
@@ -45,12 +33,14 @@ def setStatus():
 
 @route('/GetStatus')
 def getStatus():
-    
     # Use this if the global variable set in setStatus should be used
     #return { "LedStatus" : str(LedStatus)}
     
     # determines the state from the raspberry pi pin
     state = GPIO.input(led)
+
+    #TODO: send current time in return JSON
+    now = datetime.datetime.now()
     return { "LedStatus" : str(state)}
 
 try:
