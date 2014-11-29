@@ -11,7 +11,7 @@ $(".OnButton").click(function() {
 
     try{
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://192.168.0.14:8080/SetStatus", false);
+        xhr.open("PUT", "http://192.168.0.14:8080/status", false);
 
         //Send the proper header information along with the request
         xhr.setRequestHeader("Content-type", "application/json");
@@ -20,7 +20,7 @@ $(".OnButton").click(function() {
     catch(err){alert("Turn On: Server on Pi unavailable!")}
     
     // Get state of LED from server
-    xhr.open("GET", "http://192.168.0.14:8080/GetStatus", false);
+    xhr.open("GET", "http://192.168.0.14:8080/status", false);
     xhr.send();    
 
     var response = JSON.parse(xhr.responseText);
@@ -45,7 +45,7 @@ $(".OffButton").click(function() {
         // Update HTML file
     try{
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://192.168.0.14:8080/SetStatus", false);
+        xhr.open("PUT", "http://192.168.0.14:8080/status", false);
 
         //Send the proper header information along with the request
         xhr.setRequestHeader("Content-type", "application/json");
@@ -55,7 +55,7 @@ $(".OffButton").click(function() {
     catch(err){alert("Turn Off: Server on Pi unavailable!")}
 
     // Get state of LED from server
-    xhr.open("GET", "http://192.168.0.14:8080/GetStatus", false);
+    xhr.open("GET", "http://192.168.0.14:8080/status", false);
     xhr.send();  
 
     var response = JSON.parse(xhr.responseText);

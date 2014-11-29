@@ -16,7 +16,7 @@ GPIO.setup(led, GPIO.OUT)
 
 @route('/static/<filename:path>')
 def server_static(filename):
-    return static_file(filename, root='webpageFiles')
+    return static_file(filename, root='html')
 
 @put('/status')
 def setStatus():
@@ -39,7 +39,6 @@ def getStatus():
     state = GPIO.input(led)
 
     #TODO: send current time in return JSON
-    now = datetime.datetime.now()
     return { "LedStatus" : str(state)}
 
 try:
