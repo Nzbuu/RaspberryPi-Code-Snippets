@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <title>WebIOPi | LED Control</title>
+ <link href="style\bootstrap\css\bootstrap.css" rel="stylesheet">
+ <!-- make it mobile friendly: -->
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <!-- my own css: -->
+ <link href="style\main.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="buttons container">
+          <div class="col-md-6">
+            <div class ="pull-right">
+              <div class="OnButton">
+              
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="OffButton">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of the Jumbotron -->
+    <div class="LED container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="belowLED">Click history:</div>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="/webiopi.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+</body>
+</html>

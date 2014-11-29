@@ -11,12 +11,12 @@ GPIO.setup(led, GPIO.OUT)
 
 
 @route('/Off')
-def uit():
+def off():
 	GPIO.output(led, False)
 	return static_file('frownie.png', root = 'images', mimetype='image/png')
 
 @route('/On')
-def aan():
+def on():
 	GPIO.output(led, True)
 	return static_file('smiley.png', root = 'images', mimetype='image/png')
 

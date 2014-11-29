@@ -1,4 +1,4 @@
-from bottle import route, run, static_file, debug, request, response
+from bottle import get, put, route, run, static_file, debug, request, response
 import RPi.GPIO as GPIO
 import json
 
@@ -18,20 +18,19 @@ GPIO.setup(led, GPIO.OUT)
 def server_static(filename):
     return static_file(filename, root='webpageFiles')
 
-@route('/SetStatus', method='POST')
+@put('/status')
 def setStatus():
-    print "POST Header : \n %s" % dict(request.json) #for debug header
+    print "PUT Header : \n %s" % dict(request.json) #for debug header
 
     data = request.json;
     status  = data['LedStatus']
 
-    global LedStatus
     LedStatus = status
     print "LedStatus : \n %s" % str(LedStatus)
 
     GPIO.output(led, LedStatus)
 
-@route('/GetStatus')
+@get('/status')
 def getStatus():
     # Use this if the global variable set in setStatus should be used
     #return { "LedStatus" : str(LedStatus)}
