@@ -1,1 +1,7 @@
 sftp-config.json
+Documentation/Circuits.out
+Documentation/Circuits.tcp
+doc/Circuits.aux
+doc/Circuits.tcp
+*.out
+*.aux

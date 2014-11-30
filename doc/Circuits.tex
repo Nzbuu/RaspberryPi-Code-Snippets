@@ -1,0 +1,139 @@
+% ***********************
+% THESIS_WITH_PDFCODE.tex
+% ***********************
+% David.Winterbottom@gmail.com
+
+\documentclass[12pt,a4paper]{article}
+
+% Essential packages
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{multirow}
+% Type 1 Fonts fr bessere darstellung in PDF verwenden.
+%
+\usepackage{rotating}
+
+\usepackage{accents}
+%\newlength{\dhatheight}
+%\newcommand{\doublehat}[1]{%
+%    \settoheight{\dhatheight}{\ensuremath{\hat{#1}}}%
+%    \addtolength{\dhatheight}{-0.20ex}%
+%    \hat{\vphantom{\rule{2pt}{\dhatheight}}%
+%    \smash{\hat{#1}}}}
+
+\newcommand{\doublehat}[1]{\hat{\hat{#1}}}
+
+\usepackage{mathptmx}   
+\usepackage{color,soul} 
+\definecolor{orange}{rgb}{1, 1, 1}
+\sethlcolor{orange}
+
+\usepackage[german, english]{babel}
+
+\usepackage{graphicx,color}
+
+\usepackage[a4paper,inner=2in,outer=1in, top=1.5in, bottom=1in, includefoot, headheight=27pt]{geometry}
+\usepackage[square, comma, numbers, sort&compress]{natbib}
+\usepackage[T1]{fontenc}
+\usepackage{subfig}
+\usepackage{wrapfig}
+
+
+% Optional customisation packages
+%Aside from mathpazo, there are several other fonts available, such as chancery, palatino and times (all loaded in the same way).%
+\usepackage{times}
+%\usepackage{pxfonts}
+%\usepackage[hang, small, bf, margin=20pt, tableposition=top]{caption} 
+%\setlength{\abovecaptionskip}{0pt}
+
+% Page layout
+\parindent 0pt
+\parskip 1ex
+\renewcommand{\baselinestretch}{1.5}
+\numberwithin{equation}{section}
+\renewcommand{\bibname}{References}
+\renewcommand{\contentsname}{Contents}
+\newcommand{\myi}{\ensuremath{\dot{\imath}}}
+\pagenumbering{roman}
+% New definition of square root:
+% it renames \sqrt as \oldsqrt
+\let\oldsqrt\sqrt
+% it defines the new \sqrt in terms of the old one
+\def\sqrt{\mathpalette\DHLhksqrt}
+\def\DHLhksqrt#1#2{%
+\setbox0=\hbox{$#1\oldsqrt{#2\,}$}\dimen0=\ht0
+\advance\dimen0-0.2\ht0
+\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+{\box0\lower0.4pt\box2}}
+
+%\usepackage{setspace}
+%\singlespacing
+%\onehalfspacing
+
+% Customising headers (optional) - see fancyhdr.pdf
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{}
+\lhead{\nouppercase{\textsc{\leftmark}}}
+\renewcommand{\headrulewidth}{0pt}
+\makeatletter
+\makeatother
+
+% Customising chapter headings (optional) - see sectsty.pdf
+\usepackage{sectsty}
+\chapterfont{\large\sc\centering}
+\chaptertitlefont{\centering}
+\subsubsectionfont{\centering}
+
+% PDF hyper-linking (set colors to black for printing)
+\usepackage[colorlinks]{hyperref}
+\usepackage[figure,table]{hypcap}
+\hypersetup{
+	bookmarksnumbered,
+	pdfstartview={FitH},
+	citecolor={black},
+	linkcolor={black},
+	urlcolor={black},
+	pdfpagemode={UseOutlines}
+}
+\makeatletter
+\newcommand\org@hypertarget{}
+\let\org@hypertarget\hypertarget
+\renewcommand\hypertarget[2]{%
+  \Hy@raisedlink{\org@hypertarget{#1}{}}#2%
+} 
+\makeatother 
+%\usepackage{perpage}
+%\MakePerPage{footnote}
+% Set which chapters to include
+%\includeonly{chapter1}
+\setcounter{MaxMatrixCols}{16}
+
+\usepackage[europeanresistors,americaninductors,siunitx]{circuitikz}
+
+% Actual document
+\begin{document}
+	
+	% Titlepage
+%\title{
+%\huge{Circuit Diagrams for Rasberry Pi Projects} \\[2cm]
+%\date{November 2014}\author{Anniek van der Drift}
+%}
+%\pdfbookmark[0]{Titlepage}{title}
+%\maketitle
+%\pdfbookmark[0]{Abstract}{abstract}
+\pagenumbering{arabic}
+ 	%%====================================================================
+	% Include all chapter files
+\include{sections/blinkLED}
+\include{sections/blinkLEDwithTransistor}
+%begin of the appendix
+%\appendix
+%\include{chapters/ist}
+%\bibliographystyle{unsrt}
+%\bibliography{bib/references}
+%\addcontentsline{toc}{chapter}{Bibliography}
+
+
+	 %%====================================================================
+
+\end{document}

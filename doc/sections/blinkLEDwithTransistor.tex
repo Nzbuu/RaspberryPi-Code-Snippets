@@ -1,0 +1,16 @@
+\section{Blinking LED with Transistor}
+\label{sec:blinkLEDTransistor}
+\begin{circuitikz}
+\draw
+
+(4,3) -- (4,4) to[Tnpn,n=npn] (4,6) 
+(0,5) to [short, o-, l=$\mathrm{GPIO11}$] (1,5)
+(npn.B) node[right=7mm] {npn}
+(1,5) to [R, l = $10k\Omega$] (npn.B)
+(4,6) to [R, l = $330\Omega$] (4,8)
+(4,10) to [empty led] (4,8)			
+(4,4) to (4,3) node[ground]{}
+(4,11) to [short, o-, l = $3.3V$] (4,10)
+
+;
+\end{circuitikz}
