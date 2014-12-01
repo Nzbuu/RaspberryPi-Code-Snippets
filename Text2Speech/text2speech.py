@@ -1,17 +1,18 @@
 
 import text2speechviagoogle as text2speech
 import weatherAPI
+import forecastio as source
 
 #some useful debug commands
 #text2speech.downloadSpeechFromText("hello, how are you today", "./downloadedFile.mp3")
 
 # Get current weather description
-json_out = weatherAPI.queryWeatherAPI(weatherAPI.currentWeatherUrl());
-weatherString1 = weatherAPI.assembleCurrentWeatherString(json_out);
+json_out = weatherAPI.queryWeatherAPI(source.assembleQueryUrl(source.currentWeatherUrl()));
+weatherString1 = source.assembleCurrentWeatherString(json_out);
 
 # Get forecast
-json_out = weatherAPI.queryWeatherAPI(weatherAPI.forecastDayUrl());
-weatherString2 = weatherAPI.assembleForecastForTheDayString(json_out);
+json_out = weatherAPI.queryWeatherAPI(source.assembleQueryUrl(source.forecastDayUrl()));
+weatherString2 = source.assembleForecastForTheDayString(json_out);
 
 # Assemble full message
 fullMessage = weatherString1 + weatherString2 + " Have a nice day!"
