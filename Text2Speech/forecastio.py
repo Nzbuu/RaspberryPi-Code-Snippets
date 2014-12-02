@@ -28,12 +28,14 @@ def assembleForecastForTheDayString(json_out):
     hourlyData = json_out['hourly']['data'];
 
     # extract minimum and maximum temperature
-    temperature = [x['temperature'] for x in hourlyData];
+    #TODO: restrict to only the next 12 hours (check code below)
+    temperature = [x['temperature'] for x in hourlyData[0:11]];
     temperature_min = str(int(min(temperature)));
     temperature_max = str(int(max(temperature)));
 
     # extract maximum precipitation probablilty
-    precipProbability = [x['precipProbability'] for x in hourlyData];
+    #TODO: restrict to only the next 12 hours  (check code below)
+    precipProbability = [x['precipProbability'] for x in hourlyData[0:11]];
     precipProbability = str(int(max(precipProbability)));
 
     weatherString = "The minimum temperature will be " +  temperature_min + " degrees. " \
