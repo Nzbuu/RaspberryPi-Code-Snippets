@@ -38,7 +38,7 @@ def assembleForecastForTheDayString(json_out):
     precipProbability = [x['precipProbability'] for x in hourlyData[0:11]];
     precipProbability = str(int(max(precipProbability)));
 
-    weatherString = "The minimum temperature will be " +  temperature_min + " degrees. " \
+    weatherString = "The minimum temperature in the next 12 hours will be " +  temperature_min + " degrees. " \
     "the maximum will be " + temperature_max + ". The maximum chance of rain today is " + \
      precipProbability + " percent. "
     return weatherString  
