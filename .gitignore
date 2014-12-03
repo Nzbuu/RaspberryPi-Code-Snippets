@@ -6,3 +6,4 @@ doc/Circuits.tcp
 *.out
 *.aux
 myApiKey
+doc/Circuits.log
