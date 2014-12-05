@@ -7,7 +7,7 @@ class ThermistorThermometer
 
 
 def __init__(self, pin_in, pin_out, C):
-	# Set pins
+    # Set pins
     self.pin_in = pin_in
     self.pin_out  = pin_out
     self.Capacitance = C # Capacitance [F]

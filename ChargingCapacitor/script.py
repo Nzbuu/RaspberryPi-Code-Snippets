@@ -1,4 +1,4 @@
-def main():
+try:
     # Create global variable for pinslse
     pin_in = 17
     pin_out  = 13
@@ -15,7 +15,5 @@ def main():
     
     print "goodbye"
 
-try:
-    main()
 finally:
 	del Thermometer;
