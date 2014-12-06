@@ -53,11 +53,17 @@ class ThermistorThermometer:
     def getMeasurement(self):
         self.__calculateTimeConstant();
         self.__calculateTemperature();
-        class Measurement
-            timeStamp = time.time();
-            data      =  self.temperature;
-            units     = self.sensorUnits;       
-        return data;
+        class Measurement:
+            timeStamp
+            data
+            units
+
+        newMeasurement           = Measurement()
+        newMeasurement.timeStamp = time.time();
+        newMeasurement.data      = self.temperature;
+        newMeasurement.units     = self.sensorUnits;  
+
+        return newMeasurement;
 
 
     def printResults(self):
