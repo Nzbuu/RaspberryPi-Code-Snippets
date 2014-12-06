@@ -45,7 +45,7 @@ class ThermistorThermometer:
         T = 1/inverseOfT;
         self.temperature = T - 273.15; # convert from Kelvin to degCelsius
 
-    def readTemperature(self):
+    def getMeasurement(self):
         self.__calculateTimeConstant();
         self.__calculateTemperature();
         return self.temperature;

@@ -9,7 +9,7 @@ try:
 
     Thermometer = ThermistorThermometer.ThermistorThermometer(pin_in, pin_out, Capacitance)
     
-    T_deg = Thermometer.readTemperature();
+    T_deg = Thermometer.getMeasurement();
 
     print "Temperature = " + str(round(T_deg,1)) + " degC"
 
