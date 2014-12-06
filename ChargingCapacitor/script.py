@@ -1,10 +1,13 @@
+import ThermistorThermometer
+import time
+
 try:
     # Create global variable for pinslse
-pin_in = 17
-pin_out  = 13
-Capacitance = 10e-6; # Capacitance [F]
+    pin_in = 17
+    pin_out  = 13
+    Capacitance = 10e-6; # Capacitance [F]
 
-Thermometer = ThermistorThermometer(pin_in, pin_out, Capacitance)
+    Thermometer = ThermistorThermometer.ThermistorThermometer(pin_in, pin_out, Capacitance)
     
     T_deg = Thermometer.readTemperature();
 

@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 import math
 
-class ThermistorThermometer
+class ThermistorThermometer:
     """ Analogue Thermometer Class for measurement without ADC """
     def __init__(self, pin_in, pin_out, C):
         # Set pins
@@ -26,7 +26,7 @@ class ThermistorThermometer
         GPIO.cleanup();     
  
     def __calculateTimeConstant(self):  
-        timeCharge = countToHigh(pin_in, pin_out);
+        timeCharge = self.__countToHigh();
         self.tau = timeCharge/math.log(2);
 
     def __calculateTemperature(self):
@@ -45,7 +45,7 @@ class ThermistorThermometer
         T = 1/inverseOfT;
         self.temperature = T - 273.15; # convert from Kelvin to degCelsius
 
-    def readTemperature():
+    def readTemperature(self):
         self.__calculateTimeConstant();
         self.__calculateTemperature();
         return self.temperature;
@@ -55,20 +55,21 @@ class ThermistorThermometer
         print "Time constant: " + str(round(tau*1000,1)) + "ms."
         print "Temperature = " + str(round(self.temperature,1)) + " degC"
 
-    def __countToHigh():
+    def __countToHigh(self):
+
         count = 0
         # Set the output state to high (this charges the capacitor)
         startTime=time.time()
 
-        GPIO.output(pin_out, GPIO.HIGH)
+        GPIO.output(self.pin_out, GPIO.HIGH)
     
-        while (GPIO.input(pin_in) == GPIO.LOW):
+        while (GPIO.input(self.pin_in) == GPIO.LOW):
             count +=1
 
         diffTime=time.time() - startTime
     
         # Reset output pin to low
-        GPIO.output(pin_out, GPIO.LOW)
+        GPIO.output(self.pin_out, GPIO.LOW)
         time.sleep(0.1);
         return diffTime       
 
