@@ -54,9 +54,9 @@ class ThermistorThermometer:
         self.__calculateTimeConstant();
         self.__calculateTemperature();
         class Measurement:
-            timeStamp
-            data
-            units
+            timeStamp = 0;
+            data      = 0;
+            units     = 0;
 
         newMeasurement           = Measurement()
         newMeasurement.timeStamp = time.time();
