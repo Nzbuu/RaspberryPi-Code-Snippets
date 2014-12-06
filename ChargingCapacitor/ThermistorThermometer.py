@@ -4,6 +4,11 @@ import math
 
 class ThermistorThermometer:
     """ Analogue Thermometer Class for measurement without ADC """
+    # Class variable: Sensor type
+    sensorType = "Thermometer";
+    sensorID = "TM1"
+    sensorUnits = "degC";
+
     def __init__(self, pin_in, pin_out, C):
         # Set pins
         self.pin_in = pin_in
@@ -48,12 +53,16 @@ class ThermistorThermometer:
     def getMeasurement(self):
         self.__calculateTimeConstant();
         self.__calculateTemperature();
-        return self.temperature;
+        class Measurement
+            timeStamp = time.time();
+            data      =  self.temperature;
+            units     = self.sensorUnits;       
+        return data;
 
 
     def printResults(self):
         print "Time constant: " + str(round(tau*1000,1)) + "ms."
-        print "Temperature = " + str(round(self.temperature,1)) + " degC"
+        print "Temperature = " + str(round(self.temperature,1)) + " " + self.sensorUnits
 
     def __countToHigh(self):
 
