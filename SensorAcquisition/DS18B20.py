@@ -58,7 +58,7 @@ class DS18B20:
         f.close()
         return rawData
 
-    def formatSensorData(stringInput):
+    def formatSensorData(self, stringInput):
 
         equals_pos = stringInput.find('t=')
         if equals_pos != -1:
