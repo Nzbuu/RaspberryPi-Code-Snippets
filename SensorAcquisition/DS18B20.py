@@ -13,7 +13,7 @@ class DS18B20:
     def __init__(self):
 
         self.temperature = 0
-        # Set up wire1 communication
+        # Set up wire1 communicat
         os.system('modprobe w1-gpio')
         os.system('modprobe w1-therm')
 
@@ -35,12 +35,12 @@ class DS18B20:
         newMeasurement = Measurement()
 
         # Read raw data
-        rawData = self.__readSensor()
+        rawData = self.readSensor()
 
         if rawData[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
             # Extract temperature from raw data
-            self.temperature = self.__formatSensorData(rawData)
+            self.temperature = self.formatSensorData(rawData)
 
             newMeasurement.timeStamp = time.time()
             newMeasurement.data = self.temperature
@@ -52,13 +52,13 @@ class DS18B20:
     def printResults(self):
         print "Temperature = " + str(round(self.temperature,1)) + " " + self.sensorUnits
 
-    def __readSensor(self):
+    def readSensor(self):
         f = open(self.device_file, 'r')
         rawData = f.readlines()
         f.close()
         return rawData
 
-    def __formatSensorData(rawData):
+    def formatSensorData(rawData):
 
         equals_pos = rawData[1].find('t=')
         if equals_pos != -1:
