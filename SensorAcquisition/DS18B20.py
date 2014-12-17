@@ -35,12 +35,12 @@ class DS18B20:
         newMeasurement = Measurement()
 
         # Read raw data
-        rawData = self.readSensor()
+        rawData = self.__readSensor()
 
         if rawData[0].strip()[-3:] == 'YES':
             time.sleep(0.2)
             # Extract temperature from raw data
-            self.temperature = self.formatSensorData(rawData[1])
+            self.temperature = self.__formatSensorData(rawData[1])
 
             newMeasurement.timeStamp = time.time()
             newMeasurement.data = self.temperature
@@ -52,13 +52,13 @@ class DS18B20:
     def printResults(self):
         print "Temperature = " + str(round(self.temperature,1)) + " " + self.sensorUnits
 
-    def readSensor(self):
+    def __readSensor(self):
         f = open(self.device_file, 'r')
         rawData = f.readlines()
         f.close()
         return rawData
 
-    def formatSensorData(self, stringInput):
+    def __formatSensorData(self, stringInput):
 
         equals_pos = stringInput.find('t=')
         if equals_pos != -1:
