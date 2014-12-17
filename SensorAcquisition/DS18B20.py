@@ -40,7 +40,7 @@ class DS18B20:
         if rawData[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
             # Extract temperature from raw data
-            self.temperature = self.formatSensorData(rawData)
+            self.temperature = self.formatSensorData(rawData[1])
 
             newMeasurement.timeStamp = time.time()
             newMeasurement.data = self.temperature
@@ -60,8 +60,8 @@ class DS18B20:
 
     def formatSensorData(rawData):
 
-        equals_pos = rawData[1].find('t=')
+        equals_pos = rawData.find('t=')
         if equals_pos != -1:
-            temp_string = rawData[1][equals_pos+2:]
+            temp_string = rawData[equals_pos+2:]
             temp_c = float(temp_string) / 1000.0 # Sensor returns 1/1000 degC
             return temp_c
