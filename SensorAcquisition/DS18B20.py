@@ -3,7 +3,6 @@ import glob
 import time
 
 
-
 class DS18B20:
     """ Measures Temperature using a Thermistor """
     # Class variable: Sensor type
