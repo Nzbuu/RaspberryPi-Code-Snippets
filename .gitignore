@@ -9,3 +9,4 @@ myApiKey
 doc/Circuits.log
 SensorAcquisition/.idea/
 .pyc
+*/*.pyc
