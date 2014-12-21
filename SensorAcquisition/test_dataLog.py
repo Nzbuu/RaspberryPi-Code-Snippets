@@ -42,7 +42,7 @@ class TestDataLog(TestCase):
         measurements = d.measurements
         self.assertEqual(measurements, [])
 
-    def test_writeMeasurementsToFile(self):
+    def test_writeMeasurementsToDatabase(self):
         sensor = DummySensor()
         t1 = 5
         t2 = 100
@@ -50,10 +50,10 @@ class TestDataLog(TestCase):
         d.appendMeasurement()
         d.appendMeasurement()
         d.appendMeasurement()
-        d.writeMeasurementsToFile()
+        d.writeMeasurementsToDatabase()
         d.appendMeasurement()
         d.appendMeasurement()
-        d.writeMeasurementsToFile()
+        d.writeMeasurementsToDatabase()
         #TODO: Add assertion statement
 
 

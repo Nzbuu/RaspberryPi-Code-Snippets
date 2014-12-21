@@ -1,5 +1,6 @@
 import PeriodicTimer
 import time
+from DataBase import DataBase
 
 
 class DataLog:
@@ -7,10 +8,11 @@ class DataLog:
 
     def __init__(self, sensor, measurementInterval, writeInterval):
         self.sensor = sensor
-        self.fileName = sensor.sensorID + ".txt"
         self.timeStep = measurementInterval
         self.writeInterval = writeInterval
         self.measurements = []
+        self.table_name = sensor.sensorID
+        self.db = DataBase('SensorData')
 
     def recordSingleMeasurement(self):
         measurement = self.sensor.getMeasurement()
@@ -26,7 +28,7 @@ class DataLog:
 
     def run(self):
         timerDataAquisition = PeriodicTimer.PeriodicTimer(self.timeStep, self.appendMeasurement)
-        timerWriteToFile = PeriodicTimer.PeriodicTimer(self.writeInterval, self.writeMeasurementsToFile)
+        timerWriteToFile = PeriodicTimer.PeriodicTimer(self.writeInterval, self.writeMeasurementsToDatabase())
 
         timerDataAquisition.start()
         time.sleep(1)
@@ -37,21 +39,19 @@ class DataLog:
                 time.sleep(1)
 
         finally:
-            self.writeMeasurementsToFile()
+            self.writeMeasurementsToDatabase()
             timerDataAquisition.cancel()
             timerWriteToFile.cancel()
 
-    def writeMeasurementsToFile(self):
-        # Copy
+    def writeMeasurementsToDatabase(self):
+
         writeData = self.measurements
 
         if not writeData:
             pass
         else:
             self.clearMeasurements()
-            # Write data to file
-            f = open(self.fileName, 'a')
-            [f.write(str(m.timeStamp)+"\t"+str(m.data)+"\n") for m in writeData]
-            f.close()
+            # Write data to db
+            self.db.write_array_of_data_points_to_database(writeData, self.table_name)
 
         return True

@@ -8,3 +8,4 @@ doc/Circuits.tcp
 myApiKey
 doc/Circuits.log
 SensorAcquisition/.idea/
+.pyc
