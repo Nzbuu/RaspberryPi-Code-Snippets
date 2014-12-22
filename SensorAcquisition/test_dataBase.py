@@ -1,5 +1,6 @@
 from unittest import TestCase
-from DataBase import DataBase
+from DataBase import DataBas
+from measurement import measurement
 
 __author__ = 'Anniek'
 
@@ -12,6 +13,7 @@ class TestDataBase(TestCase):
 
     def test_write_measurement_to_database(self):
         o = DataBase('testDB')
+        #todo: use measurement class
         data_point = {'temperature': 20, 'time': 10201, 'humidity': 67}
         o.write_measurement_to_database(data_point, 'data')
         # TODO: insert assertion
@@ -22,6 +24,7 @@ class TestDataBase(TestCase):
         # TODO: insert assertion
 
     def write_array_of_measurements_to_database(self):
+        #todo: use measurement class
         data_point = {'temperature': 20, 'time': 10201, 'humidity': 67}
         array_of_points = [data_point, data_point, data_point]
         o = DataBase('testDB')

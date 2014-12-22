@@ -1,6 +1,7 @@
 __author__ = 'DRIA'
 import sqlite3
 import json
+from measurement import measurement
 
 
 class DataBase:
@@ -15,11 +16,11 @@ class DataBase:
 
     def create_database_table(self, table_name, **kwargs):
         # Expected input format:
-        #create_database_table(time = 'REAL', value = 'REAL')
+        #create_database_table(data time = 'REAL', value = 'REAL')
 
         cursor = self.db.cursor()
 
-        sql_str = 'CREATE TABLE ' + table_name + _assemble_create_args(kwargs)
+        sql_str = 'CREATE TABLE ' + table_name + self._assemble_create_args(kwargs)
 
         cursor.execute(sql_str)
         cursor.close()
@@ -31,11 +32,12 @@ class DataBase:
         # measurement = {'temperature':20, 'time': 10201}
 
         # TODO: check if the table exists before trying to insert data into it
+        meas = measurement.convert_to_dict(measurement)
 
-        list_of_keys = measurement.keys()
-        list_of_values = [measurement[key] for key in list_of_keys]
+        list_of_keys = meas.keys()
+        list_of_values = [meas[key] for key in list_of_keys]
 
-        sql_str = 'INSERT INTO  ' + table_name + _assemble_insert_args(measurement)
+        sql_str = 'INSERT INTO  ' + table_name + self._assemble_insert_args(meas)
 
         cursor = self.db.cursor()
         cursor.execute(sql_str, list_of_values)
@@ -56,13 +58,10 @@ class DataBase:
         cursor.close()
         return result
 
-
 def _assemble_insert_args(measurement):
     # example measurement = {'temperature':20, time: 10201, 'humidity': 67%}
     # expected output for measurement '(time, temperature, humidity) VALUES(?,?,?)'
     list_of_keys = measurement.keys()
-    list_of_values = [measurement[key] for key in list_of_keys]
-
     keys = ','.join(list_of_keys)
 
     # make list of question marks the size of the length of the list of keys
@@ -70,31 +69,12 @@ def _assemble_insert_args(measurement):
     qm_list = ','.join(['?' for x in range(0,question_mark_list_length)])
 
     string_out = '(' + keys + ')' + ' VALUES (' + qm_list + ')'
-
     return string_out
 
-
-def _assemble_create_args(input_dict):
+def _assemble_create_args(**kwargs):
 
     table_contents = '{keyName} {valueName}'
-    table_contents = [table_contents.format(keyName=key, valueName=input_dict[key]) for key in input_dict]
+    table_contents = [table_contents.format(keyName=key, valueName=kwargs[key]) for key in kwargs]
 
-    string_out = '('
-    for item in table_contents:
-        string_out += item + ', '
-
-    # remove trailing comma
-    string_out = string_out[0:len(string_out)-2]
-    # close brackets
-    string_out += ')'
-
+    string_out = '(' + ','.join(table_contents) + ')'
     return string_out
-
-def _format_measurement(self, measurement):
-    # measurement = {'temperature':20, 'time': 10201, 'units':units}
-    measurement['time'] = measurement.time;
-    # TODO: finish this
-
-
-
-
