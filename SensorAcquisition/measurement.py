@@ -3,18 +3,19 @@ __author__ = 'Anniek'
 
 class Measurement(object):
     def __init__(self, **kwargs):
-        # Todo: intialise to default values if no inputs are given
-        self.timeStamp = kwargs['timeStamp']
-        self.data = kwargs['data']
-        self.units = kwargs['units']
+        # Todo: initialise to default values if no inputs are given
+        if kwargs:
+            self.timeStamp = kwargs['timeStamp']
+            self.value = kwargs['value']
+            self.units = kwargs['units']
 
-    def set_values(self, timeStamp, data, units):
+    def set_values(self, timeStamp, value, units):
         self.timeStamp = timeStamp
-        self.data = data
+        self.value = value
         self.units = units
 
     def convert_to_dict(self):
-        measurement_dict = {'timeStamp' : self.timeStamp, 'data' : self.data, 'units' : self.units}
+        measurement_dict = {'timeStamp': self.timeStamp, 'value': self.value, 'units': self.units}
         return measurement_dict
 
 
