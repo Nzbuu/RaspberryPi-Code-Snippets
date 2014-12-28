@@ -52,6 +52,6 @@ class DataLog:
         else:
             self.clearMeasurements()
             # Write data to db
-            self.db.write_array_of_data_points_to_database(writeData, self.table_name)
+            self.db.write_array_of_measurements_to_database(writeData, self.table_name)
 
         return True

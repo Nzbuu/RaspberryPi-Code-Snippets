@@ -2,6 +2,7 @@ import time
 from unittest import TestCase
 from DataLog import DataLog
 from DummySensor import DummySensor
+
 __author__ = 'dria'
 
 
@@ -54,7 +55,7 @@ class TestDataLog(TestCase):
         d.appendMeasurement()
         d.appendMeasurement()
         d.writeMeasurementsToDatabase()
-        #TODO: Add assertion statement
+        # TODO: Add assertion statement
 
 
 
