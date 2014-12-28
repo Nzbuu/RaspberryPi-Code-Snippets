@@ -10,6 +10,6 @@ class TestDummySensor(TestCase):
         s = DummySensor()
         time_now = time.time()
         measurement = s.getMeasurement()
-        self.assertEqual(measurement.data, 1)
+        self.assertEqual(measurement.value, 1)
         self.assertEqual(measurement.units, "-")
         self.assertEqual(measurement.timeStamp, time_now)

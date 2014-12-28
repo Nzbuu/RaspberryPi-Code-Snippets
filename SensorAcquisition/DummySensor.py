@@ -1,4 +1,5 @@
 import time
+from Measurement import Measurement
 
 
 class DummySensor:
@@ -12,15 +13,9 @@ class DummySensor:
     sensorUnits = "-"
 
     def getMeasurement(self):
-        class Measurement(object):
-            def __init__(self):
-                pass
-            timeStamp = 0
-            data = 0
-            units = ""
 
         newMeasurement = Measurement()
         newMeasurement.timeStamp = time.time()
-        newMeasurement.data = 1
+        newMeasurement.value = 1
         newMeasurement.units = self.sensorUnits
         return newMeasurement
