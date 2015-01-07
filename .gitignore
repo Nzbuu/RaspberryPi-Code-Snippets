@@ -10,3 +10,4 @@ doc/Circuits.log
 SensorAcquisition/.idea/
 .pyc
 */*.pyc
+SensorAcquisition/DB/testDB
