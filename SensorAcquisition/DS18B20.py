@@ -1,6 +1,7 @@
 import os
 import glob
 import time
+from Measurement import Measurement
 
 
 class DS18B20:
@@ -27,23 +28,19 @@ class DS18B20:
 
     def getMeasurement(self):
 
-        class Measurement:
-            timeStamp = -1
-            data = -1
-            units = " "
-
-        newMeasurement = Measurement()
-
         # Read raw data
         rawData = self.__readSensor()
+        
+        newMeasurement = Measurement()
 
         if rawData[0].strip()[-3:] == 'YES':
+            time_meas = time.time()
             time.sleep(0.2)
             # Extract temperature from raw data
             self.temperature = self.__formatSensorData(rawData[1])
 
-            newMeasurement.timeStamp = time.time()
-            newMeasurement.data = self.temperature
+            newMeasurement.timeStamp = time_meas
+            newMeasurement.value = self.temperature
             newMeasurement.units = self.sensorUnits
 
         return newMeasurement
