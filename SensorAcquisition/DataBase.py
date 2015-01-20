@@ -2,7 +2,7 @@ __author__ = 'DRIA'
 import sqlite3
 import json
 from collections import namedtuple
-from Measurement import Measurement
+from measurement import Measurement
 
 
 class DataBase:

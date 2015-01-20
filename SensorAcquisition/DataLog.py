@@ -28,7 +28,7 @@ class DataLog:
 
     def run(self):
         timerDataAquisition = PeriodicTimer.PeriodicTimer(self.timeStep, self.appendMeasurement)
-        timerWriteToFile = PeriodicTimer.PeriodicTimer(self.writeInterval, self.writeMeasurementsToDatabase())
+        timerWriteToFile = PeriodicTimer.PeriodicTimer(self.writeInterval, self.writeMeasurementsToDatabase)
 
         timerDataAquisition.start()
         time.sleep(1)

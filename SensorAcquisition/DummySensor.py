@@ -1,5 +1,5 @@
 import time
-from Measurement import Measurement
+from measurement import Measurement
 
 
 class DummySensor:
