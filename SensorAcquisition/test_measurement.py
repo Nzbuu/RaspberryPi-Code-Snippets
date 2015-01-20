@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Measurement import Measurement
+from measurement import Measurement
 __author__ = 'Anniek'
 
 

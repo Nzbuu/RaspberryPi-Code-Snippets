@@ -1,7 +1,7 @@
 import os
 import glob
 import time
-from Measurement import Measurement
+from measurement import Measurement
 
 
 class DS18B20:
