@@ -1,6 +1,7 @@
 import threading
 import functools
 
+# From http://stackoverflow.com/questions/8600161/executing-periodic-actions-in-python
 
 class PeriodicTimer(object):
     def __init__(self, interval, callback):

@@ -14,7 +14,7 @@ class TestDataLog(TestCase):
         d = DataLog(sensor, t1, t2)
         measurement = d.recordSingleMeasurement()
         time_now = time.time()
-        self.assertEqual(measurement.data, 1)
+        self.assertEqual(measurement.value, 1)
         self.assertEqual(measurement.units, "-")
         self.assertEqual(measurement.timeStamp, time_now)
 
@@ -30,19 +30,6 @@ class TestDataLog(TestCase):
         measurements = d.measurements
         self.assertEqual(len(measurements), 3)
 
-
-    def test_clearMeasurements(self):
-        sensor = DummySensor()
-        t1 = 5
-        t2 = 100
-        d = DataLog(sensor, t1, t2)
-        d.appendMeasurement()
-        d.appendMeasurement()
-        d.appendMeasurement()
-        d.clearMeasurements()
-        measurements = d.measurements
-        self.assertEqual(measurements, [])
-
     def test_writeMeasurementsToDatabase(self):
         sensor = DummySensor()
         t1 = 5
@@ -57,5 +44,15 @@ class TestDataLog(TestCase):
         d.writeMeasurementsToDatabase()
         # TODO: Add assertion statement
 
-
+    def test_clearMeasurements(self):
+        sensor = DummySensor()
+        t1 = 5
+        t2 = 100
+        d = DataLog(sensor, t1, t2)
+        d.appendMeasurement()
+        d.appendMeasurement()
+        d.appendMeasurement()
+        d.clearMeasurements()
+        measurements = d.measurements
+        self.assertEqual(measurements, [])
 

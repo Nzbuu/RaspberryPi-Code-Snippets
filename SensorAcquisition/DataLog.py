@@ -1,4 +1,4 @@
-import PeriodicTimer
+from PeriodicTimer import PeriodicTimer
 import time
 from DataBase import DataBase
 
@@ -12,7 +12,7 @@ class DataLog:
         self.writeInterval = writeInterval
         self.measurements = []
         self.table_name = sensor.sensorID
-        self.db = DataBase('SensorData')
+        self.db = DataBase('DB/SensorData')
 
     def recordSingleMeasurement(self):
         measurement = self.sensor.getMeasurement()
@@ -27,8 +27,11 @@ class DataLog:
         self.measurements = []
 
     def run(self):
-        timerDataAquisition = PeriodicTimer.PeriodicTimer(self.timeStep, self.appendMeasurement)
-        timerWriteToFile = PeriodicTimer.PeriodicTimer(self.writeInterval, self.writeMeasurementsToDatabase)
+        # todo: make it automatic what table columns are supposed to be there, derived from contents of measurement object?
+        self.db.create_database_table(self.table_name, timeStamp='REAL', value='REAL', units='TEXT')
+
+        timerDataAquisition = PeriodicTimer(self.timeStep, self.appendMeasurement)
+        timerWriteToFile = PeriodicTimer(self.writeInterval, self.writeMeasurementsToDatabase)
 
         timerDataAquisition.start()
         time.sleep(1)
@@ -36,7 +39,7 @@ class DataLog:
 
         try:
             while True:
-                time.sleep(1)
+                pass
 
         finally:
             self.writeMeasurementsToDatabase()

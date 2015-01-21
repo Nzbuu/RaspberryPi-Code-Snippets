@@ -10,22 +10,19 @@ class DataBase:
 
     def __init__(self, db_name):
         # Connect to database (db is created if it does not exist)
-        self.db = sqlite3.connect(db_name)
-        self.db.row_factory = _named_tuple_factory
+        self.row_factory = _named_tuple_factory
+        self.name = db_name
 
     def __del__(self):
-        self.db.close()
+        pass
 
     def create_database_table(self, table_name, **kwargs):
         # Expected input format:
         # create_database_table(data, time = 'REAL', value = 'REAL')
-        cursor = self.db.cursor()
 
         sql_str = 'CREATE TABLE IF NOT EXISTS ' + table_name + _assemble_create_args(**kwargs)
 
-        cursor.execute(sql_str)
-        cursor.close()
-        self.db.commit()
+        self.modify_db(sql_str, [])
 
     def write_measurement_to_database(self, measurement, table_name):
         # This function writes to the db
@@ -37,11 +34,7 @@ class DataBase:
 
         sql_str = 'INSERT INTO  ' + table_name + ' ' + _assemble_insert_args(meas)
 
-        cursor = self.db.cursor()
-        cursor.execute(sql_str, list_of_values)
-        cursor.close()
-
-        self.db.commit()
+        self.modify_db(sql_str, list_of_values)
 
     def write_array_of_measurements_to_database(self, measurements, table_name):
         for measurement in measurements:
@@ -49,28 +42,53 @@ class DataBase:
 
     def read_from_database(self, table_name):
         # This function reads from the db. Currently returns all data. TODO: Should in future be more specific.
-        cursor = self.db.cursor()
-        cursor.execute('SELECT * FROM ' + table_name)
+        sql_str = 'SELECT * FROM ' + table_name
+        results_list = self.read_from_db(sql_str)
 
-        results_list = cursor.fetchall()
-        cursor.close()
         # The functionality below will probably be moved to  a separate class
         # results_dict = named_tuple_list_to_dict(results_list)
-        # results_json = json.dumps(results_dict, sort_keys=True, indent=4, separators=(',', ': '))
+        # results_json = json.dumps(results_dict, sort_keys=True, indent=4, separators=(',', ': '))c
         return results_list
 
     def delete_table(self, table_name):
-        cursor = self.db.cursor()
-        cursor.execute('DROP TABLE ' + table_name)
-        cursor.close()
-        self.db.commit()
+        sql_str = 'DROP TABLE ' + table_name
+        self.modify_db(sql_str, [])
 
     def list_all_tables_in_db(self):
-        cursor = self.db.cursor()
-        cursor.execute("SELECT name from sqlite_master WHERE type='table';")
-        result = cursor.fetchall()
+        sql_str = "SELECT name from sqlite_master WHERE type='table';"
+        result = self.read_from_db(sql_str)
         result = [x[0] for x in result]
+        return result
+
+    def modify_db(self, sql_str, args):
+        # Write to db
+        database = sqlite3.connect(self.name)
+        database.row_factory = self.row_factory
+        cursor = database.cursor()
+
+        try:
+            cursor.execute(sql_str, args)
+            cursor.close()
+            database.commit()
+        except Exception, e:
+            database.rollback()
+            print "Update failed. Rolling back attempted db changes."
+            print "Reason: " + e.message
+        finally:
+            database.close()
+
+    def read_from_db(self, sql_str):
+
+        database = sqlite3.connect(self.name)
+        database.row_factory = self.row_factory
+        cursor = database.cursor()
+
+        cursor.execute(sql_str)
+
+        result = cursor.fetchall()
+
         cursor.close()
+        database.commit()
         return result
 
 
