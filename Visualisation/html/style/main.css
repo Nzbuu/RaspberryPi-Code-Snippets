@@ -1,0 +1,13 @@
+.jumbotron {
+	background-color: #777;
+	text-align:center;
+}
+body {
+	background: white;
+	text-align:center;
+}
+html, body, #chart {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	width: 100%;
