@@ -7,4 +7,7 @@ doc/Circuits.tcp
 *.aux
 myApiKey
 doc/Circuits.log
-SensorAcquisition/.idea/
+Sensors/.idea/
+.pyc
+*/*.pyc
+Sensors/DB/

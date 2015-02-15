@@ -1,0 +1,1 @@
+This folder is supposed to contain the db files. The db files should not be commited.

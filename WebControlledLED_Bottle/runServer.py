@@ -22,7 +22,7 @@ def server_static(filename):
 def setStatus():
     print "PUT Header : \n %s" % dict(request.json) #for debug header
 
-    data = request.json;
+    data = request.json
     status  = data['LedStatus']
 
     LedStatus = status
