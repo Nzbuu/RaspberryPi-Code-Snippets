@@ -18,7 +18,7 @@ def server_static(filename):
 @get('/data')
 def getData():
     db = DataBase('../Sensors/DB/SensorData')
-    results = db.read_from_database('DS18B20', 5000) # limit to 96 data points for now
+    results = db.read_from_database('DS18B20', 5000, 'timeStamp') # limit to 96 data points for now
 
     time = [row.timeStamp for row in results]
     value = [row.value for row in results]
