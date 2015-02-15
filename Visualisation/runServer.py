@@ -13,7 +13,7 @@ debug(True)
 
 @route('/static/<filename:path>')
 def server_static(filename):
-    return static_file(filename, root='html')
+    return static_file(filename, root='.')
 
 @get('/data')
 def getData():
