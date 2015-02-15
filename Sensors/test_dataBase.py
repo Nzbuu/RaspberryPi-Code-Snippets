@@ -2,6 +2,7 @@ from unittest import TestCase
 import os.path
 from DataBase import DataBase
 from measurement import Measurement
+import time
 
 __author__ = 'Anniek'
 
@@ -20,18 +21,18 @@ class TestDataBase(TestCase):
 
     def test_write_measurement_to_database(self):
         o = DataBase('DB/Dummy')
-        data_point = Measurement(value=20, timeStamp=10201, units='degC')
+        data_point = Measurement(value=20, timeStamp=time.time(), units='degC')
         o.write_measurement_to_database(data_point, 'Dummy')
 
     def test_read_from_database(self):
         # check if the measurement has been written to the db correctly
         o = DataBase('DB/Dummy')
-        results = o.read_from_database('Dummy', 3)
+        results = o.read_from_database('Dummy', 3, 'timeStamp')
         self.assertTrue(len(results) > 0)
         self.assertEqual(len(results), 3)
 
     def test_write_array_of_measurements_to_database(self):
-        data_point = Measurement(value=20, timeStamp=10201, units='degC')
+        data_point = Measurement(value=20, timeStamp=time.time(), units='degC')
         array_of_points = [data_point, data_point, data_point]
         o = DataBase('DB/Dummy')
 

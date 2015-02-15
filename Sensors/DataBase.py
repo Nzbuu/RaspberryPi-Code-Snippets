@@ -41,12 +41,17 @@ class DataBase:
             self.write_measurement_to_database(measurement, table_name)
 
     def read_from_database(self, table_name, *args):
-        # This function reads from the db. Currently returns all data. TODO: Should in future be more specific.
+        # This function reads from the db. Currently returns all data or the last args[0]
+        # data, where the table is sorted by the column specified in args[1]
         sql_str = 'SELECT * FROM ' + table_name
         if len(args) > 0:
-            sql_str = sql_str + ' LIMIT '+ str(args[0])
+            sql_str = sql_str + ' ORDER BY ' + args[1] + ' DESC LIMIT '+ str(args[0])
 
         results_list = self.read_from_db(sql_str)
+
+        # flip the returned list if reordered above
+        if len(args) > 0:
+            results_list = results_list[::-1]
         return results_list
 
     def delete_table(self, table_name):
