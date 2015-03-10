@@ -49,19 +49,6 @@ class IMU:
         register = self.address_book[command]
         self.bus.write_byte_data(address, register, value)
 
-    def meas_obj_wrapper(func):
-        def create_meas_object(self):
-            output = func(self)
-            newMeasurement = Measurement()
-
-            newMeasurement.timeStamp = output['time_meas']
-            newMeasurement.value = output['value']
-            newMeasurement.units = output['units']
-            return newMeasurement
-
-        return create_smeas_object
-
-    @meas_obj_wrapper
     def getMagMeasurement(self):
         address = self.address_book['MAG_ADDRESS']
         raw_data = self.readBlock(address, 'OUT_X_L_M')
@@ -69,9 +56,14 @@ class IMU:
         mag_LSB = 0.48 * 1e-3  # G/LSB  TODO: make this dependent on the initialisation command
         factor_tesla_per_gauss = 1e-4  # http://en.wikipedia.org/wiki/Gauss_%28unit%29
         mag_flux_density = [row * mag_LSB * factor_tesla_per_gauss for row in raw_data]
-        return {'value': mag_flux_density, 'units': 'T', 'time_stamp': time_meas}
 
-    @meas_obj_wrapper
+        # Create new measurement object
+        newMeasurement = Measurement()
+        newMeasurement.timeStamp = time_meas
+        newMeasurement.value = mag_flux_density
+        newMeasurement.units = 'T'
+        return newMeasurement
+
     def getAccMeasurement(self):
         address = self.address_book['ACC_ADDRESS']
         raw_data = self.readBlock(address, 'OUT_X_L_A')
@@ -79,17 +71,30 @@ class IMU:
         acc_LSB = 0.732 * 1e-3  # g/LSB  TODO: make this dependent on the initialisation command
         factor_ms2_per_gn = 9.80665  # From http://www.bipm.org/utils/common/pdf/si_brochure_8_en.pdf#page=51
         acc = [row * acc_LSB * factor_ms2_per_gn for row in raw_data]
-        return {'value': acc, 'units': 'm/s^2', 'time_stamp': time_meas}
 
-    @meas_obj_wrapper
+        # Create new measurement object
+        newMeasurement = Measurement()
+        newMeasurement.timeStamp = time_meas
+        newMeasurement.value = acc
+        newMeasurement.units = 'm/s^2'
+        return newMeasurement
+
     def getGyrMeasurement(self):
         address = self.address_book['GYR_ADDRESS']
+        time_before = time.time()
         raw_data = self.readBlock(address, 'OUT_X_L_G')
         time_meas = time.time()
+        print time_meas-time_before
         gyr_LSB = 0.07  # deg/s/LSB TODO: make this dependent on the initialisation command
         factor_rad_per_deg = 180 / np.pi
         rate = [row * gyr_LSB * factor_rad_per_deg for row in raw_data]
-        return {'value': rate, 'units': 'deg/s', 'time_stamp': time_meas}
+
+        # Create new measurement object
+        newMeasurement = Measurement()
+        newMeasurement.timeStamp = time_meas
+        newMeasurement.value = rate
+        newMeasurement.units = 'deg/s'
+        return newMeasurement
 
     def __enableSensor(self):
         # Enable accelerometer.
