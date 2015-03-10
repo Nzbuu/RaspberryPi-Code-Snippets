@@ -50,15 +50,16 @@ class IMU:
         self.bus.write_byte_data(address, register, value)
 
     def meas_obj_wrapper(func):
-        def create_meas_object():
-            output = func()
+        def create_meas_object(self):
+            output = func(self)
             newMeasurement = Measurement()
+
             newMeasurement.timeStamp = output['time_meas']
             newMeasurement.value = output['value']
             newMeasurement.units = output['units']
             return newMeasurement
 
-        return create_meas_object
+        return create_smeas_object
 
     @meas_obj_wrapper
     def getMagMeasurement(self):
