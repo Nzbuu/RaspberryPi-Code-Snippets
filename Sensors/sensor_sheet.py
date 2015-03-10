@@ -85,3 +85,6 @@ registers = {
     'TIME_LATENCY': 0x3C,
     'TIME_WINDOW': 0x3D
 }
+
+ACC_setup = {'LSB': [0.061, 0.122, 0.183, 0.244, 0.732],
+       'dataword': ['000', '001',  '101',  '011', '100'] }  # 2, 4, 6, 8, 16 mg/LSB
