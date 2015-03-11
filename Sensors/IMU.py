@@ -20,6 +20,13 @@ class IMU:
     def __del__(self):
         pass
 
+    def getMeasurement(self):
+        # This is currently set up to read Gyr data so the Datalogger can interface with the IMU.
+        # TODO: figure out a better way of handling having a single sensor that returns different types of measurements
+        measurement = self.getGyrMeasurement()
+        return measurement
+
+
     def printResults(self):
         pass
 
@@ -85,7 +92,7 @@ class IMU:
         raw_data = self.readBlock(address, 'OUT_X_L_G')
         time_meas = time.time()
         deltaT = time_meas-time_before
-        print "max measurement delay [s]: " + str(deltaT)
+        #  print "max measurement delay [s]: " + str(deltaT)
 
         gyr_LSB = 0.07  # deg/s/LSB TODO: make this dependent on the initialisation command
         factor_rad_per_deg = 180 / np.pi
