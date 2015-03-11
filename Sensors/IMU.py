@@ -84,7 +84,9 @@ class IMU:
         time_before = time.time()
         raw_data = self.readBlock(address, 'OUT_X_L_G')
         time_meas = time.time()
-        print time_meas-time_before
+        deltaT = time_meas-time_before
+        print "max measurement delay [s]" + deltaT
+
         gyr_LSB = 0.07  # deg/s/LSB TODO: make this dependent on the initialisation command
         factor_rad_per_deg = 180 / np.pi
         rate = [row * gyr_LSB * factor_rad_per_deg for row in raw_data]
@@ -93,7 +95,7 @@ class IMU:
         newMeasurement = Measurement()
         newMeasurement.timeStamp = time_meas
         newMeasurement.value = rate
-        newMeasurement.units = 'deg/s'
+        newMeasurement.units = 'rad/s'
         return newMeasurement
 
     def __enableSensor(self):
